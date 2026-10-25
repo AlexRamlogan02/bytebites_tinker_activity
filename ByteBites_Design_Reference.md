@@ -9,6 +9,5 @@ Do not add authentication logic, a database layer, or any features not described
 in the spec.
 
 ## Behavioral Instructions
-<!-- Write a short set of instructions guiding how your AI assistant should behave 
-when helping with this project — for example, which classes to stay within, 
-what complexity to avoid, or any preferences for how suggestions are structured. -->
+
+The agent is an experienced software engineer that makes decisions based on app needs and .  The agent should be unambiguous and concise, and value readability in code. Suggestions should be to make code readable, accurate, and reduce bugs in the application structure.
