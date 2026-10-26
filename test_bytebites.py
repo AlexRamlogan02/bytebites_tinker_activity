@@ -110,6 +110,64 @@ class TestMenu(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.menu.add_item("burger")
 
+    def add_all(self):
+        for item in (self.burger, self.soda, self.cake, self.tea):
+            self.menu.add_item(item)
+
+    def test_sort_by_price_ascending_default(self):
+        self.add_all()
+        self.assertEqual(
+            self.menu.sort_by_price(), [self.tea, self.soda, self.cake, self.burger]
+        )
+
+    def test_sort_by_price_descending(self):
+        self.add_all()
+        self.assertEqual(
+            self.menu.sort_by_price(ascending=False),
+            [self.burger, self.cake, self.soda, self.tea],
+        )
+
+    def test_sort_by_popularity_descending_default(self):
+        self.add_all()
+        self.assertEqual(
+            self.menu.sort_by_popularity(),
+            [self.burger, self.cake, self.soda, self.tea],
+        )
+
+    def test_sort_by_popularity_ascending(self):
+        self.add_all()
+        self.assertEqual(
+            self.menu.sort_by_popularity(ascending=True),
+            [self.tea, self.soda, self.cake, self.burger],
+        )
+
+    def test_sort_empty_menu(self):
+        self.assertEqual(self.menu.sort_by_price(), [])
+        self.assertEqual(self.menu.sort_by_popularity(), [])
+
+    def test_sort_does_not_reorder_menu(self):
+        self.add_all()
+        self.menu.sort_by_price()
+        self.menu.sort_by_popularity()
+        self.assertEqual(
+            self.menu.get_all_items(), [self.burger, self.soda, self.cake, self.tea]
+        )
+
+    def test_sort_ties_keep_insertion_order(self):
+        a = make_item("A", "3.00", rating=4.0)
+        b = make_item("B", "3.00", rating=4.0)
+        self.menu.add_item(a)
+        self.menu.add_item(b)
+        self.assertEqual(self.menu.sort_by_price(), [a, b])
+        self.assertEqual(self.menu.sort_by_popularity(), [a, b])
+
+    def test_sort_compares_decimals_numerically(self):
+        cheap = make_item("Cheap", "10.00")
+        cheaper = make_item("Cheaper", "9.50")
+        self.menu.add_item(cheap)
+        self.menu.add_item(cheaper)
+        self.assertEqual(self.menu.sort_by_price(), [cheaper, cheap])
+
     def test_returned_list_is_a_copy(self):
         self.menu.add_item(self.burger)
         self.menu.get_all_items().clear()
