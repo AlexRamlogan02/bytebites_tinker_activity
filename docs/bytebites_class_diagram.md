@@ -42,6 +42,8 @@ classDiagram
     +addItem(item: MenuItem) void
     +getAllItems() List~MenuItem~
     +filterByCategory(category: Category) List~MenuItem~
+    +sortByPrice(ascending: boolean) List~MenuItem~
+    +sortByPopularity(ascending: boolean) List~MenuItem~
   }
 
   class Category {

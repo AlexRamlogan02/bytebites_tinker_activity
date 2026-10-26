@@ -61,6 +61,14 @@ class Menu:
             raise TypeError("category must be a Category.")
         return [item for item in self._items if item.category is category]
 
+    def sort_by_price(self, ascending: bool = True) -> list[MenuItem]:
+        return sorted(self._items, key=lambda item: item.price, reverse=not ascending)
+
+    def sort_by_popularity(self, ascending: bool = False) -> list[MenuItem]:
+        return sorted(
+            self._items, key=lambda item: item.popularity_rating, reverse=not ascending
+        )
+
 
 class Order:
     def __init__(self) -> None:
